@@ -85,8 +85,8 @@ selected sets may not be unique.
 The Python package uses the repaired local R implementation as a reference for
 fixed draw summaries. This is distinct from comparison with the released CRAN
 version. General selection accuracy, high-dimensional sampler mixing and full
-paper reproduction require separate evidence. No unrestricted theorem or
-false-discovery guarantee is advertised.
+paper reproduction require separate evidence. These checks do not establish
+false-discovery control.
 
 ## Numerical limits
 
