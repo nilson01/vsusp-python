@@ -1,0 +1,41 @@
+# Optional fixed-case reference exporter. R is not needed by the Python package.
+args <- commandArgs(trailingOnly=TRUE)
+if (length(args)!=1L) stop("Usage: Rscript export_r_reference.R OUTPUT_DIRECTORY")
+out <- args[1]
+dir.create(out,recursive=TRUE,showWarnings=FALSE)
+library(VsusP)
+required <- c("TwoMeansBeta","SpikeSlabSelection","DSS","SAVS")
+if (!all(required %in% getNamespaceExports("VsusP")))
+  stop("Use the repaired development VsusP installation; released CRAN 1.0.0 lacks these helpers.")
+write_matrix <- function(x,name) write.table(x,file.path(out,name),sep=",",row.names=FALSE,col.names=FALSE)
+B <- rbind(c(.01,.02,.03,.3,.31,10,11),-c(.01,.02,.03,.3,.31,10,11))
+write_matrix(B,"draws.csv")
+path <- Sequential2MeansBeta(B,.1,.5,2,clustering="exact")
+write_matrix(cbind(path$b.i,path$H.b.i),"s2m.csv")
+small <- matrix(c(0,.125,10),nrow=1)
+write_matrix(c(Sequential2MeansBeta(small,.1,.1,1,"exact","legacy")$H.b.i,
+               Sequential2MeansBeta(small,.1,.1,1,"exact","refine")$H.b.i),"pairs.csv")
+cardinality <- matrix(c(0,.1,10,11,12),nrow=1)
+write_matrix(cardinality,"cardinality.csv")
+basic <- TwoMeansBeta(cardinality)
+write_matrix(basic$selected-1L,"two-means-selected.csv")
+spike <- rbind(c(1,0,0),c(2,0,0),c(0,-1,0),c(0,-2,0))
+write_matrix(spike,"spike.csv")
+ss <- SpikeSlabSelection(spike)
+write_matrix(ss$inclusion.probability,"inclusion.csv")
+write_matrix(ss$MPM-1L,"mpm.csv")
+write_matrix(ss$HPPM-1L,"hppm.csv")
+X <- rbind(c(1,0,.5),c(0,2,1),c(1,1,0),c(-1,0,1),c(0,-1,-1))
+beta <- c(2,.1,-.4)
+write_matrix(X,"X.csv");write_matrix(beta,"beta.csv")
+write_matrix(SAVS(X,beta)$coefficients,"savs.csv")
+dss <- DSS(X,beta,lambda=.1)
+if (!dss$converged) stop("R DSS did not converge")
+write_matrix(dss$coefficients,"dss.csv")
+write_matrix(c(dss$objective,dss$kkt.error),"dss-diagnostics.csv")
+write.csv(data.frame(key=c("R","VsusP","reference","clustering","indices"),
+ value=c(R.version.string,as.character(packageVersion("VsusP")),
+ "repaired local development installation; not released CRAN 1.0.0",
+ "exact","R indices converted to zero-based for comparison")),
+ file.path(out,"metadata.csv"),row.names=FALSE)
+cat("Loaded installed VsusP from",find.package("VsusP"),"\n")

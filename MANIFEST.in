@@ -1,0 +1,14 @@
+include README.md NOTICE.md LICENSE CHANGELOG.md
+recursive-include docs *.md
+recursive-include examples *.py
+recursive-include tests *.py
+include mkdocs.yml
+recursive-include tests/data *.csv
+recursive-include tools *.py *.R
+recursive-include docs/figures *.svg *.png *.csv
+
+recursive-include docs/figures *.pdf *.json
+recursive-include docs/validation *.json
+recursive-include docs/manual *.pdf
+
+recursive-include docs/assets *.js

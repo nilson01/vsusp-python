@@ -1,0 +1,9 @@
+{
+  "source": "../results/*.npz and ../results/results.json",
+  "uncertainty": "MCSE estimated with ArviZ and batch sizes100/200; max used",
+  "chains": 4,
+  "retained_per_chain": 4000,
+  "burnin_per_chain": 2000,
+  "trace_display_stride": 20,
+  "no_discarded_draws_for_estimation": true
+}

@@ -1,0 +1,20 @@
+site_name: VsusP
+site_description: Variable selection from shrinkage-prior posterior draws
+nav:
+  - Overview: index.md
+  - Tutorials: tutorials.md
+  - Methods and limitations: methods.md
+  - API reference: api.md
+  - Numerical validation: validation.md
+  - Reference manual: manual/reference.md
+  - Development: development.md
+theme:
+  name: readthedocs
+plugins:
+  - search
+
+extra_javascript:
+  - assets/math.js
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+site_url: https://nilson01.github.io/vsusp-python/
