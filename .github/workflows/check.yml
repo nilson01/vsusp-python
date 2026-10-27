@@ -1,6 +1,7 @@
 name: Package checks
 on:
   push:
+    branches: [main]
     paths-ignore: ["docs/**", "**/*.md", "mkdocs.yml"]
   pull_request:
     paths-ignore: ["docs/**", "**/*.md", "mkdocs.yml"]
