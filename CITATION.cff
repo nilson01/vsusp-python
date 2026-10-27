@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "Please cite the package paper and the statistical methods used, and record the software version."
+title: "VsusP: Variable selection from shrinkage-prior posterior draws"
+type: software
+version: 0.1.0
+authors:
+  - family-names: Chapagain
+    given-names: Nilson
+repository-code: https://github.com/nilson01/vsusp-python
+license: GPL-3.0-or-later
+preferred-citation:
+  type: generic
+  title: "VsusP: Variable selection from Bayesian shrinkage priors in R and Python"
+  authors:
+    - family-names: Chapagain
+      given-names: Nilson
+      orcid: https://orcid.org/0000-0003-2962-2949
+  year: 2026
+  url: https://www.researchgate.net/publication/416922764_VsusP_Variable_selection_from_Bayesian_shrinkage_priors_in_R_and_Python
+  notes: Preprint

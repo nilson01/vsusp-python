@@ -7,6 +7,7 @@ nav:
   - API reference: api.md
   - Numerical validation: validation.md
   - Reference manual: manual/reference.md
+  - Citation: citation.md
   - Development: development.md
 theme:
   name: readthedocs

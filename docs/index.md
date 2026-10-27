@@ -12,6 +12,10 @@ Install with `pip install vsusp`. For plots and chain diagnostics, use
 
 [Reference manual (PDF)](manual/vsusp-manual.pdf) · [Numerical validation](validation.md)
 
+## Citation
+
+See the [package paper and BibTeX citation](citation.md).
+
 ## Acknowledgements
 
 Computations were performed on the Arseven Computing Cluster, Department of
