@@ -58,7 +58,7 @@ and survival likelihoods are not implemented.
 
 ## SAVS and DSS
 
-SAVS retains coefficient j only when $\|X_j\|^2|\hat\beta_j|^3>1$, where
+SAVS retains coefficient j only when $\lVert X_j\rVert^2|\hat\beta_j|^3>1$, where
 $X_j$ is predictor column j and $\hat\beta_j$ is its supplied estimate.
 Equality sets the coefficient to zero. Its threshold depends on predictor units.
 See [Ray and Bhattacharya (2018)](https://arxiv.org/abs/1810.09004).
@@ -67,7 +67,7 @@ For DSS, let $\bar\beta$ be the supplied estimate and $\lambda$ the `penalty`.
 The sparse coefficient vector minimizes
 
 $$
-n^{-1}\|X\bar\beta-X\gamma\|_2^2
+n^{-1}\lVert X\bar\beta-X\gamma\rVert_2^2
 +\lambda\sum_j\frac{|\gamma_j|}{|\bar\beta_j|}.
 $$
 
