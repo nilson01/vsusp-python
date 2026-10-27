@@ -30,7 +30,7 @@ $$
 Y = X\beta + \epsilon, \qquad \epsilon \sim N(0,\sigma^2 I).
 $$
 
-Here Y is the response vector, X is the model matrix, $\beta$ denotes the
+Here Y is the response vector for n observations, X is the model matrix, $\beta$ denotes the
 coefficient vector and sigma² is the residual variance. The mathematical model
 includes an intercept; the fitting functions add it internally.
 
@@ -58,12 +58,12 @@ and survival likelihoods are not implemented.
 
 ## SAVS and DSS
 
-SAVS retains coefficient j only when $\lVert X_j\rVert^2|\hat\beta_j|^3>1$, where
+The signal adaptive variable selector (SAVS) retains coefficient j only when $\lVert X_j\rVert^2|\hat\beta_j|^3>1$, where
 $X_j$ is predictor column j and $\hat\beta_j$ is its supplied estimate.
 Equality sets the coefficient to zero. Its threshold depends on predictor units.
 See [Ray and Bhattacharya (2018)](https://arxiv.org/abs/1810.09004).
 
-For DSS, let $\bar\beta$ be the supplied estimate and $\lambda$ the `penalty`.
+For decoupling shrinkage and selection (DSS), let $\bar\beta$ be the supplied estimate and $\lambda$ the `penalty`.
 The sparse coefficient vector minimizes
 
 $$

@@ -6,8 +6,8 @@ VsusP selects variables from posterior coefficient draws under Bayesian
 shrinkage priors. It also fits Gaussian ridge, horseshoe and exact spike-and-slab
 regression in Python. The runtime dependencies are NumPy and SciPy.
 
-The selection methods follow Li and Pati (2017), with SAVS and the adaptive-L1
-DSS approximation as separate summaries. Model assumptions, tuning and
+The selection methods follow Li and Pati (2017), with the signal adaptive variable selector (SAVS) and an adaptive-L1
+approximation to decoupling shrinkage and selection (DSS) as separate summaries. Model assumptions, tuning and
 chain mixing determine how fitted results should be interpreted.
 
 # Installation
@@ -155,7 +155,7 @@ $$
 Y = X\beta + \epsilon, \qquad \epsilon \sim N(0,\sigma^2 I).
 $$
 
-Here Y is the response vector, X is the model matrix, $\beta$ denotes the
+Here Y is the response vector for n observations, X is the model matrix, $\beta$ denotes the
 coefficient vector and sigma² is the residual variance. The mathematical model
 includes an intercept; the fitting functions add it internally.
 
@@ -183,12 +183,12 @@ and survival likelihoods are not implemented.
 
 ## SAVS and DSS
 
-SAVS retains coefficient j only when $\lVert X_j\rVert^2|\hat\beta_j|^3>1$, where
+The signal adaptive variable selector (SAVS) retains coefficient j only when $\lVert X_j\rVert^2|\hat\beta_j|^3>1$, where
 $X_j$ is predictor column j and $\hat\beta_j$ is its supplied estimate.
 Equality sets the coefficient to zero. Its threshold depends on predictor units.
 See [Ray and Bhattacharya (2018)](https://arxiv.org/abs/1810.09004).
 
-For DSS, let $\bar\beta$ be the supplied estimate and $\lambda$ the `penalty`.
+For decoupling shrinkage and selection (DSS), let $\bar\beta$ be the supplied estimate and $\lambda$ the `penalty`.
 The sparse coefficient vector minimizes
 
 $$
@@ -204,14 +204,6 @@ Cyclic coordinate descent reports a relative convex optimality error and warns
 when the tolerance is unmet. With dependent predictors, sparse coefficients and
 selected sets may not be unique.
 
-## Evidence boundaries
-
-The Python package uses the repaired local R implementation as a reference for
-fixed draw summaries. This is distinct from comparison with the released CRAN
-version. General selection accuracy, high-dimensional sampler mixing and full
-paper reproduction require separate evidence. No unrestricted theorem or
-false-discovery guarantee is advertised.
-
 ## Numerical limits
 
 Fitting stops if a covariance factorization fails or its estimated reciprocal
@@ -225,6 +217,8 @@ conversion preserves their values.
 # Function reference
 
 ## Gaussian models
+
+Here n is the number of observations and p is the number of predictors.
 
 | Function | Required inputs | Main controls | Result |
 |---|---|---|---|
@@ -284,7 +278,8 @@ coefficients plus the supplied intercept. `summary()` returns a text summary.
 `diagnostics(fit)` includes beta, intercept and sigma². For external arrays,
 use `diagnostics(draws, feature_names=...)` with explicit (chain, draw, predictor)
 axes and at least four retained draws. Results contain rank R-hat, bulk/tail ESS,
-mean MCSE, flags and backend, plus `summary()`.
+mean MCSE, flags and backend, plus `summary()`. ESS is effective sample size;
+MCSE estimates the numerical error of a sampled posterior mean.
 
 | Plot | Input | Other controls |
 |---|---|---|

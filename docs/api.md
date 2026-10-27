@@ -2,6 +2,8 @@
 
 ## Gaussian models
 
+Here n is the number of observations and p is the number of predictors.
+
 | Function | Required inputs | Main controls | Result |
 |---|---|---|---|
 | `fit_ridge` | X (n × p), y (n) | draws, chains, prior_scale, random_state, feature_names | GaussianFit |
@@ -60,7 +62,8 @@ coefficients plus the supplied intercept. `summary()` returns a text summary.
 `diagnostics(fit)` includes beta, intercept and sigma². For external arrays,
 use `diagnostics(draws, feature_names=...)` with explicit (chain, draw, predictor)
 axes and at least four retained draws. Results contain rank R-hat, bulk/tail ESS,
-mean MCSE, flags and backend, plus `summary()`.
+mean MCSE, flags and backend, plus `summary()`. ESS is effective sample size;
+MCSE estimates the numerical error of a sampled posterior mean.
 
 | Plot | Input | Other controls |
 |---|---|---|

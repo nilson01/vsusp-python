@@ -2,7 +2,8 @@
 
 VsusP selects variables from shrinkage-prior posterior coefficient draws.
 It provides sequential two-means (S2M), basic two-means (2-M), spike-and-slab
-inclusion summaries, SAVS and the DSS adaptive-L1 approximation. Native Gaussian
+inclusion summaries, the signal adaptive variable selector (SAVS), and an
+adaptive-L1 approximation to decoupling shrinkage and selection (DSS). Native Gaussian
 ridge, horseshoe and spike-and-slab fits provide coefficient draws in Python.
 
 ## Install
