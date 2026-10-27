@@ -8,6 +8,10 @@ ridge, horseshoe and spike-and-slab fits provide coefficient draws in Python.
 
 ## Install
 
+```sh
+pip install vsusp
+```
+
 From GitHub:
 
 ```sh
@@ -23,7 +27,7 @@ python -m pip install .
 For plots and sampling diagnostics:
 
 ```sh
-python -m pip install ".[plots,diagnostics]"
+pip install "vsusp[plots,diagnostics]"
 ```
 
 ## Select variables

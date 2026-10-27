@@ -7,8 +7,8 @@ Gaussian shrinkage regression directly in Python.
 2. [Choose a selection method](methods.md).
 3. [Find function inputs and outputs](api.md).
 
-Install from a source checkout with `python -m pip install .`.
-For plots and chain diagnostics, use `python -m pip install ".[plots,diagnostics]"`.
+Install with `pip install vsusp`. For plots and chain diagnostics, use
+`pip install "vsusp[plots,diagnostics]"`.
 
 [Reference manual (PDF)](manual/vsusp-manual.pdf) · [Numerical validation](validation.md)
 

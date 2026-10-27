@@ -20,7 +20,7 @@ from .plots import (
     plot_autocorrelation,
 )
 
-__version__ = "0.1.0.dev0"
+__version__ = "0.1.0"
 __all__ = [
     "select",
     "s2m",

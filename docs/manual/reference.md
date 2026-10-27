@@ -12,13 +12,13 @@ chain mixing determine how fitted results should be interpreted.
 
 # Installation
 
-From PyPI, after the package is published there:
+From PyPI:
 
 ```sh
 pip install vsusp
 ```
 
-From GitHub (available now):
+From GitHub:
 
 ```sh
 python -m pip install "git+https://github.com/nilson01/vsusp-python.git"
@@ -33,7 +33,7 @@ python -m pip install .
 For figures and chain diagnostics:
 
 ```sh
-python -m pip install ".[plots,diagnostics]"
+pip install "vsusp[plots,diagnostics]"
 ```
 
 # Worked examples

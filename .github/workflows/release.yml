@@ -1,26 +1,70 @@
-name: TestPyPI release
+name: Package release
 on:
   workflow_dispatch:
+    inputs:
+      target:
+        description: Validate distributions or publish to a package index
+        type: choice
+        required: true
+        default: check
+        options: [check, testpypi, pypi]
 permissions:
   contents: read
 concurrency:
-  group: testpypi-release
+  group: package-release
   cancel-in-progress: false
 jobs:
   build:
-    if: github.ref == 'refs/heads/main'
+    permissions:
+      contents: read
+      actions: read
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     env:
       OPENBLAS_NUM_THREADS: '1'
       OMP_NUM_THREADS: '1'
       MPLBACKEND: Agg
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
         with:
           python-version: '3.14'
           cache: pip
       - run: python -m pip install build twine
+      - name: Check release reference and versions
+        env:
+          RELEASE_TARGET: ${{ inputs.target }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PYCODE'
+          import ast, json, os, pathlib, subprocess, tomllib
+          from packaging.version import Version
+          version = Version(tomllib.loads(pathlib.Path('pyproject.toml').read_text())['project']['version'])
+          tree = ast.parse(pathlib.Path('src/vsusp/__init__.py').read_text())
+          runtime = next(ast.literal_eval(node.value) for node in tree.body
+                         if isinstance(node, ast.Assign) and any(isinstance(t, ast.Name) and t.id == '__version__' for t in node.targets))
+          assert str(version) == runtime, 'Runtime and package versions differ.'
+          target = os.environ['RELEASE_TARGET']
+          ref = os.environ['GITHUB_REF']
+          assert target in {'check', 'testpypi', 'pypi'}
+          if target == 'testpypi':
+              assert ref == 'refs/heads/main', 'TestPyPI requires main.'
+          if target == 'pypi':
+              assert ref == f'refs/tags/v{version}', 'PyPI requires a matching release tag.'
+              assert not (version.is_devrelease or version.is_prerelease), 'PyPI requires a final version.'
+          if target != 'check':
+              repo = os.environ['GITHUB_REPOSITORY']
+              sha = os.environ['GITHUB_SHA']
+              runs = json.loads(subprocess.check_output(['gh', 'api', f'repos/{repo}/actions/workflows/check.yml/runs?head_sha={sha}&per_page=100']))['workflow_runs']
+              eligible = [r for r in runs if r['head_sha'] == sha and r['head_branch'] == 'main'
+                          and r['head_repository']['full_name'] == repo and r['path'] == '.github/workflows/check.yml'
+                          and r['event'] in {'push', 'workflow_dispatch'}]
+              assert eligible, 'No main-branch CI for this commit.'
+              latest = max(eligible, key=lambda r: (r['run_number'], r['run_attempt']))
+              assert latest['status'] == 'completed' and latest['conclusion'] == 'success', 'Latest main CI must pass.'
+              jobs = json.loads(subprocess.check_output(['gh', 'api', f"repos/{repo}/actions/runs/{latest['id']}/jobs?filter=latest&per_page=100"]))['jobs']
+              assert len(jobs) == 4 and all(j['conclusion'] == 'success' for j in jobs), 'All platform jobs must pass.'
+          PYCODE
       - run: python -m build
       - run: python -m twine check --strict dist/*
       - name: Check installed wheel outside checkout
@@ -35,25 +79,51 @@ jobs:
           shutil.copytree('tests', target, dirs_exist_ok=True)
           subprocess.run([sys.executable, '-m', 'pytest', str(target), '-q'],
                          cwd=target.parent, check=True)
-      - uses: actions/upload-artifact@v4
+      - name: Check distribution boundaries and TestPyPI agreement
+        env:
+          RELEASE_TARGET: ${{ inputs.target }}
+        run: |
+          python - <<'PYCODE'
+          import hashlib, io, json, os, pathlib, tarfile, tomllib, urllib.request, zipfile
+          version = tomllib.loads(pathlib.Path('pyproject.toml').read_text())['project']['version']
+          def contents(name, data):
+              if name.endswith('.whl'):
+                  with zipfile.ZipFile(io.BytesIO(data)) as archive:
+                      return {n: archive.read(n) for n in archive.namelist() if not n.endswith('/')}
+              with tarfile.open(fileobj=io.BytesIO(data)) as archive:
+                  return {m.name: archive.extractfile(m).read() for m in archive.getmembers() if m.isfile()}
+          published = None
+          if os.environ['RELEASE_TARGET'] == 'pypi':
+              published = json.load(urllib.request.urlopen(f'https://test.pypi.org/pypi/vsusp/{version}/json', timeout=30))
+          for path in pathlib.Path('dist').iterdir():
+              files = contents(path.name, path.read_bytes())
+              assert not any('/private/' in n or n.endswith('.tex') or 'paper.pdf' in n for n in files), 'Private material in archive.'
+              if published is not None:
+                  record = next(item for item in published['urls'] if item['filename'] == path.name)
+                  data = urllib.request.urlopen(record['url'], timeout=30).read()
+                  assert hashlib.sha256(data).hexdigest() == record['digests']['sha256']
+                  assert contents(path.name, data) == files, 'Contents differ from the checked TestPyPI release.'
+          PYCODE
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
-          name: testpypi-distributions
+          name: python-distributions
           path: dist/*
           if-no-files-found: error
   publish:
+    if: inputs.target != 'check'
     needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     environment:
-      name: testpypi
-      url: https://test.pypi.org/project/vsusp/
+      name: ${{ inputs.target }}
     permissions:
       id-token: write
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53
         with:
-          name: testpypi-distributions
+          name: python-distributions
           path: dist
-      - name: Publish to TestPyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
+      - name: Publish distributions
+        uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086
         with:
-          repository-url: https://test.pypi.org/legacy/
+          repository-url: ${{ inputs.target == 'testpypi' && 'https://test.pypi.org/legacy/' || 'https://upload.pypi.org/legacy/' }}
