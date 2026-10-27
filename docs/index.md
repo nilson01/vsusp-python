@@ -11,3 +11,10 @@ Install from a source checkout with `python -m pip install .`.
 For plots and chain diagnostics, use `python -m pip install ".[plots,diagnostics]"`.
 
 [Reference manual (PDF)](manual/vsusp-manual.pdf) · [Numerical validation](validation.md)
+
+## Acknowledgements
+
+Computations were performed on the Arseven Computing Cluster, Department of
+Statistics, Texas A&M University.
+
+This work received no grant funding.

@@ -15,7 +15,3 @@ Schmidt (2016), https://arxiv.org/abs/1508.03884, and the Gaussian sampling
 identity of Bhattacharya, Chakraborty and Mallick (2016),
 https://doi.org/10.1093/biomet/asw042. The variance prior and flat-intercept
 convention are documented in docs/methods.md.
-
-Figure development used Scientific Agent Skills: Kassis, T., Agarwal, V.,
-He, Y., Patel, D., and Brueckner, A. M. (2026).
-https://doi.org/10.48550/arXiv.2609.00065.

@@ -93,3 +93,10 @@ Bayesian Linear Models: A Posterior Summary Perspective.
 Numerical evidence: [fixed posterior checks](docs/validation.md).
 
 License and source attribution: [NOTICE](NOTICE.md).
+
+## Acknowledgements
+
+Computations were performed on the Arseven Computing Cluster, Department of
+Statistics, Texas A&M University.
+
+This work received no grant funding.
