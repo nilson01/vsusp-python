@@ -47,6 +47,10 @@
         "beta1_squared",
         "sigma2"
       ],
+      "quadrature_error_estimates": [
+        8.137447919469314e-14,
+        9.692364077633081e-14
+      ],
       "quadrature_resolution_difference": 4.5433948270279245e-11,
       "target": [
         0.04630597330845098,
@@ -77,6 +81,11 @@
         10386.266089629722,
         2560.141624492794,
         15482.764737920383
+      ],
+      "diagnostic_flags": [
+        "inspect diagnostics",
+        "inspect diagnostics",
+        "inspect diagnostics"
       ],
       "mean_mcse": [
         0.0011519283758056498,
@@ -111,16 +120,7 @@
         true
       ],
       "pass": true,
-      "seconds": 3.4336058751214296,
-      "diagnostic_flags": [
-        "inspect diagnostics",
-        "inspect diagnostics",
-        "inspect diagnostics"
-      ],
-      "quadrature_reported_error_bounds": [
-        8.137447919469314e-14,
-        9.692364077633081e-14
-      ]
+      "seconds": 3.4253554169554263
     },
     {
       "name": "hs_strong",
@@ -169,6 +169,10 @@
         "beta1_squared",
         "sigma2"
       ],
+      "quadrature_error_estimates": [
+        1.1658373971396623e-12,
+        1.725464491156813e-11
+      ],
       "quadrature_resolution_difference": 2.653433028854124e-13,
       "target": [
         1.5575020350743125,
@@ -199,6 +203,11 @@
         14561.490490598535,
         14561.490490598535,
         13245.927081102021
+      ],
+      "diagnostic_flags": [
+        "inspect diagnostics",
+        "inspect diagnostics",
+        "inspect diagnostics"
       ],
       "mean_mcse": [
         0.0012215655149162223,
@@ -233,16 +242,7 @@
         true
       ],
       "pass": true,
-      "seconds": 2.829079790972173,
-      "diagnostic_flags": [
-        "inspect diagnostics",
-        "inspect diagnostics",
-        "inspect diagnostics"
-      ],
-      "quadrature_reported_error_bounds": [
-        1.1658373971396623e-12,
-        1.725464491156813e-11
-      ]
+      "seconds": 2.7591529169585556
     },
     {
       "name": "ss_orthogonal",
@@ -306,6 +306,7 @@
         "p10",
         "p11"
       ],
+      "quadrature_error_estimates": null,
       "quadrature_resolution_difference": 2.4731772185759837e-11,
       "target": [
         0.6387315178835604,
@@ -384,6 +385,19 @@
         15545.2213227192,
         3980.746701911897,
         14434.418330498456
+      ],
+      "diagnostic_flags": [
+        "inspect diagnostics",
+        "inspect diagnostics",
+        "inspect diagnostics",
+        "inspect diagnostics",
+        "inspect diagnostics",
+        "inspect diagnostics",
+        "inspect diagnostics",
+        "inspect diagnostics",
+        "inspect diagnostics",
+        "inspect diagnostics",
+        "inspect diagnostics"
       ],
       "mean_mcse": [
         0.00413892520554343,
@@ -466,20 +480,7 @@
         true
       ],
       "pass": true,
-      "seconds": 2.4428585830610245,
-      "diagnostic_flags": [
-        "inspect diagnostics",
-        "inspect diagnostics",
-        "inspect diagnostics",
-        "inspect diagnostics",
-        "inspect diagnostics",
-        "inspect diagnostics",
-        "inspect diagnostics",
-        "inspect diagnostics",
-        "inspect diagnostics",
-        "inspect diagnostics",
-        "inspect diagnostics"
-      ]
+      "seconds": 2.437124750111252
     },
     {
       "name": "ss_correlated",
@@ -543,6 +544,7 @@
         "p10",
         "p11"
       ],
+      "quadrature_error_estimates": null,
       "quadrature_resolution_difference": 2.7088942200492738e-11,
       "target": [
         0.323968505768234,
@@ -621,6 +623,19 @@
         416.18128786598527,
         412.89521402280644,
         8917.90379373578
+      ],
+      "diagnostic_flags": [
+        "inspect diagnostics",
+        "inspect diagnostics",
+        "inspect diagnostics",
+        "inspect diagnostics",
+        "inspect diagnostics",
+        "inspect diagnostics",
+        "inspect diagnostics",
+        "inspect diagnostics",
+        "inspect diagnostics",
+        "inspect diagnostics",
+        "inspect diagnostics"
       ],
       "mean_mcse": [
         0.01788938142345691,
@@ -703,34 +718,19 @@
         true
       ],
       "pass": true,
-      "seconds": 2.5795396249741316,
-      "diagnostic_flags": [
-        "inspect diagnostics",
-        "inspect diagnostics",
-        "inspect diagnostics",
-        "inspect diagnostics",
-        "inspect diagnostics",
-        "inspect diagnostics",
-        "inspect diagnostics",
-        "inspect diagnostics",
-        "inspect diagnostics",
-        "inspect diagnostics",
-        "inspect diagnostics"
-      ]
+      "seconds": 2.4320637909695506
     }
   ],
   "pass": true,
-  "seconds": 11.392524417024106,
-  "maxrss_raw": 158187520,
+  "seconds": 11.161613417090848,
+  "maxrss_raw": 173932544,
   "maxrss_units": "bytes on macOS; KiB on Linux",
   "platform": "macOS-14.6-arm64-arm-64bit-Mach-O",
   "python": "3.14.3",
   "numpy": "2.5.4",
   "scipy": "1.18.1",
-  "source_sha256": "2856edca017035fdd49a266f1e6c69b2d8d93834fae83e8b2dee78b0f6986227",
+  "source_sha256": "e7b0d0ed87f8183590f0afc3d49b08a70a50ebf8c3377dceba171325ae70857a",
   "draws": 4000,
   "burnin": 2000,
-  "chains": 4,
-  "checker_replay_sha256": "1753e0e7881164d7f52f225d51a02292c21cf3f59ae4c9f1f5eb5470fe400e5b",
-  "checker_replay": "same saved draws, no repeated fit; reporting repair and retained HS error estimates"
+  "chains": 4
 }
