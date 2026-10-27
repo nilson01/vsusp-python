@@ -12,7 +12,13 @@ chain mixing determine how fitted results should be interpreted.
 
 # Installation
 
-From GitHub:
+From PyPI, after the package is published there:
+
+```sh
+pip install vsusp
+```
+
+From GitHub (available now):
 
 ```sh
 python -m pip install "git+https://github.com/nilson01/vsusp-python.git"
@@ -132,7 +138,8 @@ intercept. Keep coefficient units unchanged when comparing thresholds.
 
 S2M follows section 2.2.1 of [Li and Pati (2017)](https://doi.org/10.1016/j.csda.2016.10.008).
 It recursively splits absolute coefficients and retains the saved lower-mean
-noise candidate at stopping. The center-gap comparison is strict: gap > b.
+noise candidate at stopping. Recursion continues while the center gap is greater than b; it stops when
+the gap is at most b, or a small/constant candidate boundary applies.
 The signal count is the mode across draws; tied modes favor the smaller count.
 
 Basic 2-M uses the smaller cluster size, which need not be the lower-mean cluster.
