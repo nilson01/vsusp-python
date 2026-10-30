@@ -2,7 +2,7 @@
 
 [![Tests](https://github.com/nilson01/vsusp-python/actions/workflows/check.yml/badge.svg?branch=main)](https://github.com/nilson01/vsusp-python/actions/workflows/check.yml)
 [![PyPI version](https://img.shields.io/pypi/v/vsusp?style=flat-square)](https://pypi.org/project/vsusp/)
-[![Weekly download statistics pending](https://img.shields.io/badge/weekly%20downloads-pending-lightgrey?style=flat-square)](https://pypistats.org/packages/vsusp)
+[![Weekly downloads](https://img.shields.io/pypi/dw/vsusp?style=flat-square)](https://pypistats.org/packages/vsusp)
 [![License: GPL-3.0-or-later](https://img.shields.io/badge/license-GPL--3.0--or--later-blue?style=flat-square)](https://github.com/nilson01/vsusp-python/blob/main/LICENSE)
 
 VsusP selects variables from shrinkage-prior posterior coefficient draws.
