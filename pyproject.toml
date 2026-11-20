@@ -20,10 +20,11 @@ Documentation = "https://nilson01.github.io/vsusp-python/"
 Issues = "https://github.com/nilson01/vsusp-python/issues"
 
 [project.optional-dependencies]
+posterior = ["arviz>=0.18,<1"]
 plots = ["matplotlib>=3.7"]
 diagnostics = ["arviz>=0.18"]
 docs = ["mkdocs>=1.5"]
-test = ["pytest>=8", "matplotlib>=3.7", "arviz>=0.18"]
+test = ["pytest>=8", "matplotlib>=3.7", "arviz>=0.18,<1"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
