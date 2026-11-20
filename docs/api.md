@@ -75,3 +75,34 @@ MCSE estimates the numerical error of a sampled posterior mean.
 
 All plots return axes. Variable and selected indices are zero-based. Coefficient
 plots show posterior means and equal-tail intervals, not selection-error rates.
+
+## Import ArviZ posterior draws
+
+Install `pip install "vsusp[posterior]"` for legacy ArviZ `InferenceData`
+(ArviZ 0.18–0.x). ArviZ 1.x uses `DataTree`, which this adapter does not accept.
+
+```python
+from vsusp import from_inferencedata, select, diagnostics
+
+# idata is an existing InferenceData object with a posterior group.
+posterior = from_inferencedata(
+    idata, var_names=["beta"], coords={"feature": ["age", "exposure"]}
+)
+selected = select(posterior.pooled(), 1, feature_names=posterior.feature_names)
+checks = diagnostics(posterior.as_array(), feature_names=posterior.feature_names)
+```
+
+Select variables explicitly. Each may be scalar or have one coefficient
+dimension in addition to `chain` and `draw`. `coords` selects and orders
+coefficient labels; omitted dimensions retain every label. Exclude an intercept
+through this selection when preparing inputs for variable selection. Nothing
+is removed automatically.
+
+The returned `PosteriorDraws` retains chain labels, draw labels, coefficient
+names and source-variable names. `as_array()` returns a copy shaped
+`(chains, draws, coefficients)`. `pooled()` explicitly combines chains for
+selection; use the unpooled array for diagnostics. `discard=0` retains all
+posterior draws; positive values remove that many leading draws per chain.
+Warmup groups are never included. Missing, nonfinite or duplicate labels and
+unsupported dimensions raise errors. Importing draws does not fit a model
+or establish convergence.

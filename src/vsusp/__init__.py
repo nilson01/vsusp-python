@@ -1,5 +1,6 @@
 """Variable selection using shrinkage-prior posterior draws."""
 
+from .posterior import from_inferencedata, PosteriorDraws
 from .selection import select, s2m, two_means, spike_slab
 from .sparse import savs, dss
 from .gaussian import fit_horseshoe, fit_spike_slab, fit_ridge
@@ -22,6 +23,8 @@ from .plots import (
 
 __version__ = "0.1.0"
 __all__ = [
+    "from_inferencedata",
+    "PosteriorDraws",
     "select",
     "s2m",
     "two_means",
