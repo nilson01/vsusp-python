@@ -13,7 +13,7 @@ def _labels(values, name):
     if not labels:
         raise ValueError(f"{name} must not be empty.")
     try:
-        if len(set(labels)) != len(labels) or any(v != v or (isinstance(v, (float, np.floating)) and not np.isfinite(v))
+        if len(set(labels)) != len(labels) or any(v is None or v != v or (isinstance(v, (float, np.floating)) and not np.isfinite(v))
                                                      for v in labels):
             raise ValueError(f"{name} must be unique and nonmissing.")
     except TypeError as exc:

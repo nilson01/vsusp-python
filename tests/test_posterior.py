@@ -58,6 +58,7 @@ def test_missing_nonfinite_duplicate_and_unsupported_axes_fail():
     with pytest.raises(ValueError, match='posterior group'):
         from_inferencedata(InferenceData(), var_names=['beta'])
     for dataset in [data.posterior.assign_coords(chain=[1, 1]),
+                    data.posterior.assign_coords(chain=[None, 2]),
                     data.posterior.assign_coords(feature=['a', 'a', 'b'])]:
         with pytest.raises(ValueError, match='unique'):
             from_inferencedata(InferenceData(posterior=dataset), var_names=['beta'])
